@@ -9,6 +9,7 @@ export async function inserirUsuario(user){
     insert into usuario(nm_usuario, email, ds_senha)
     values(?,?,?);
     `
+    
 
     let hash = crypto.SHA256(user.senha).toString();
     let resp = await con.query(comando, [user.nome, user.email,hash]);
