@@ -16,6 +16,7 @@ export async function cadastrarProduto(produto) {
   produto.id = resp[0].insertId
 
   return produto
+  
 }
 
 export async function listarProdutos() {

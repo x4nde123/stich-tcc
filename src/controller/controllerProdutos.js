@@ -1,39 +1,42 @@
 import { Router } from "express";
 import { cadastrarProduto, carregarImagemProduto, listarProdutos, listarProdutosPorId } from "../repository/repositoryProdutos.js";
-import multer from "multer";
+import multer from 'multer';
 
 const endpoints = Router()
-const upload = multer({ dest: 'storage/produtos' })
 
-endpoints.post('/produtos', async (req, resp) => {
+const upload = multer({ dest: 'uploads/' });
+
+endpoints.post('/produtos', upload.single('image'), async (req, resp) => {
   try {
-    const produto = req.body
+    const produto = {
+      ...req.body,
+      image: req.file?.filename, // Adicione o nome do arquivo enviado.
+    };
 
-    if (!produto.nome || !produto.valor)
-      throw new Error('Preencha todos os campos obrigatórios')
+    if (!produto.nome || !produto.valor) {
+      throw new Error('Preencha todos os campos obrigatórios');
+    }
 
-    if(!produto.id_categoria)
-      throw new Error('Selecione uma categoria')
+    if (!produto.id_categoria) {
+      throw new Error('Selecione uma categoria');
+    }
 
-    const resposta = await cadastrarProduto(produto)
-    resp.send(resposta)
-  } catch (error) { 
-    resp.status(400)
-      .send({
-        erro: error.message
-      })
+
+    const resposta = await cadastrarProduto(produto);
+    resp.send(resposta);
+  } catch (error) {
+    resp.status(400).send({ erro: error.message });
   }
-})
+});
 
 endpoints.get('/produtos', async (_, resp) => {
   try {
     const resposta = await listarProdutos()
     resp.send(resposta)
   } catch (error) {
-    resp.status(404)
-      .send({
-        erro: error.message
-      })
+    resp.status(400).send({
+      erro: error.message
+    });
   }
 })
 
