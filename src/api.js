@@ -13,5 +13,3 @@ servidor.use('/storage/produtos', express.static('storage/produtos'))
 rotas(servidor);
 
 servidor.listen(process.env.PORTA, () => console.log(`subiu na porta ${process.env.PORTA}`))
-
-

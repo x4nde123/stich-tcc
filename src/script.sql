@@ -1,30 +1,4 @@
 
-select * from usuario; 
-SELECT * FROM produtos;
-SELECT * FROM categoria WHERE id_categoria = 1;
-
-drop database api_tcc;
-SHOW CREATE TABLE produtos;
-
-ALTER TABLE produtos DROP FOREIGN KEY fk_produtos_categoria;
-
-ALTER TABLE produtos ADD CONSTRAINT fk_produtos_categoria
-FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
-ON DELETE CASCADE ON UPDATE CASCADE;
-
-
-
-
-
-SELECT * FROM categoria WHERE id_categoria = 1;
-INSERT INTO categoria (id_categoria, nm_nome, ds_descricao ) VALUES (1, 'Nome da Categoria','decricao');
-
-SHOW CREATE TABLE produtos;
-
-SELECT * FROM vendas
-LEFT JOIN produtos ON vendas.produtos = produtos.id_produto
-LEFT JOIN clientes ON vendas.id_cliente = clientes.id_cliente;
-SELECT * FROM produtos WHERE id_produto = id_venda;
 
 -- Criando o banco de dados
 CREATE DATABASE IF NOT EXISTS api_tcc;
